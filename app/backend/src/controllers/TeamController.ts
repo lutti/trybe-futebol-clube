@@ -8,6 +8,13 @@ class TeamController {
     // res.status(200).json({ message: 'Teste OK' });
     res.status(200).json(teams);
   }
+
+  static async GetById(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+    const team = await TeamService.GetById(+id);
+    if (!team) res.status(404).json({ message: 'Team not found' });
+    res.status(200).json(team);
+  }
 }
 
 export default TeamController;
