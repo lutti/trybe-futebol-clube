@@ -1,4 +1,5 @@
 import * as bcrypt from 'bcryptjs';
+import CustomAppError from '../errors/CustomAppError';
 import User from '../database/models/User';
 import IUser from '../interfaces/IUser';
 import jwt from '../utils/jwt';
@@ -17,12 +18,11 @@ class LoginService {
       where: { email: passEncUser.email },
     });
 
-    if (!userFound) return 'User not found';
+    if (!userFound) throw new CustomAppError('User not Found', 404);
 
     // checkar se o password é igual o hash
     const compare = await bcrypt.compare(userFound.password, encPass);
 
-    console.log(userFound);
     // Retornar o Token do JWT
     const jwtToken = await jwt.generateToken(passEncUser);
     if (compare) {
