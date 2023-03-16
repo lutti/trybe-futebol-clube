@@ -18,7 +18,7 @@ class LoginService {
       where: { email: passEncUser.email },
     });
 
-    if (!userFound) throw new CustomAppError('User not Found', 404);
+    if (!userFound) throw new CustomAppError('Invalid email or password', 401);
 
     // checkar se o password é igual o hash
     const compare = await bcrypt.compare(userFound.password, encPass);
@@ -27,8 +27,9 @@ class LoginService {
     const jwtToken = await jwt.generateToken(passEncUser);
     if (compare) {
       return jwtToken;
-    }/* else {
-      return 'Invalid Credentials';
+    }
+    /* else {
+      throw new CustomAppError('Invalid email or password', 401);
     } */
 
     // Teste se faz mesmo hash da Seed
