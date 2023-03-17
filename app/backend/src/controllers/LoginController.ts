@@ -4,14 +4,10 @@ import LoginService from '../services/LoginService';
 // import Team from '../database/models/Team';
 
 class LoginController {
-  static async TryToLogin(_req: Request, res: Response): Promise<void> {
-    const tokenString = await LoginService.LoginWithJWT({
-      // email: 'testeee@admin.com',
-      email: 'admin@admin.com',
-      password: 'secret_admin',
-    });
+  static async TryToLogin(req: Request, res: Response): Promise<void> {
+    const token = await LoginService.LoginWithJWT(req.body);
     // res.status(200).json({ message: 'Teste OK' });
-    res.status(200).json({ tokenString });
+    res.status(200).json({ token });
   }
 }
 
