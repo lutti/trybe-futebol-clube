@@ -1,3 +1,4 @@
+import 'express-async-errors';
 import * as bcrypt from 'bcryptjs';
 import CustomAppError from '../errors/CustomAppError';
 import User from '../database/models/User';

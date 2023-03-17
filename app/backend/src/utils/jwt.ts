@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 import IUser from '../interfaces/IUser';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'meusecretmuitosecreto';
+const JWT_SECRET = process.env.JWT_SECRET || 'jwt_secret';
 
 const generateToken = (payload: IUser) =>
   jwt.sign(payload, JWT_SECRET, {
