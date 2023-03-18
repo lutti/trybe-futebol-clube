@@ -1,7 +1,8 @@
 import * as jwt from 'jsonwebtoken';
+import CustomAppError from '../errors/CustomAppError';
 import IUser from '../interfaces/IUser';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'jwt_secret';
+const JWT_SECRET = 'jwt_secret';
 
 const generateToken = (payload: IUser) =>
   jwt.sign(payload, JWT_SECRET, {
@@ -10,21 +11,11 @@ const generateToken = (payload: IUser) =>
   });
 
 const authenticateToken = async (token: string) => {
-  if (!token) {
-    const error = new Error();
-    error.message = 'Token not found';
-    // error.status = 401;
-    return error;
-  }
-
   try {
     const verificationResponse = await jwt.verify(token, JWT_SECRET);
     return verificationResponse;
   } catch (err) {
-    const error = new Error();
-    error.message = 'Expired or invalid token';
-    // error.status = 401;
-    return error;
+    throw new CustomAppError('Token must be a valid token', 401);
   }
 };
 

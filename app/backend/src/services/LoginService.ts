@@ -40,6 +40,14 @@ class LoginService {
     // $2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW
     // return 'compare false';
   }
+
+  static async GetUserRoleByEmail(email: string): Promise<string> {
+    const userFound = await User.findOne({
+      where: { email },
+    });
+    if (!userFound) throw new CustomAppError('User not found', 500);
+    return userFound.role;
+  }
 }
 
 export default LoginService;
