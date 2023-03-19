@@ -43,6 +43,19 @@ class MatchController {
 
     throw new CustomAppError('Match id not found', 500);
   }
+
+  static async CreateNewOngoingMatch(req: Request, res: Response): Promise<void> {
+    const match = Match.build({
+      homeTeamId: req.body.homeTeamId,
+      awayTeamId: req.body.awayTeamId,
+      homeTeamGoals: req.body.homeTeamGoals,
+      awayTeamGoals: req.body.awayTeamGoals,
+      inProgress: true,
+    });
+
+    const savedMatch = await MatchService.SaveBuildedMatch(match);
+    res.status(201).json(savedMatch);
+  }
 }
 
 export default MatchController;

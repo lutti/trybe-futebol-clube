@@ -10,5 +10,6 @@ const router = Router();
 router.get('/', MatchController.GetAllMatches);
 router.patch('/:id/finish', AuthMiddleware, MatchController.FinishMatchById);
 router.patch('/:id', AuthMiddleware, MatchController.UpdateMatchById);
+router.post('/', AuthMiddleware, MatchController.CreateNewOngoingMatch);
 
 export default router;
