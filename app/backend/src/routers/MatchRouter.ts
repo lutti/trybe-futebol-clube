@@ -9,5 +9,6 @@ const router = Router();
 
 router.get('/', MatchController.GetAllMatches);
 router.patch('/:id/finish', AuthMiddleware, MatchController.FinishMatchById);
+router.patch('/:id', AuthMiddleware, MatchController.UpdateMatchById);
 
 export default router;

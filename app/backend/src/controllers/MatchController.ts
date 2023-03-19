@@ -32,6 +32,17 @@ class MatchController {
 
     throw new CustomAppError('Match id not found', 500);
   }
+
+  static async UpdateMatchById(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+    if (!id || Number.isNaN(+id)) throw new CustomAppError('Invalid id or not a number', 500);
+
+    const match = { ...req.body, id };
+    const rowsUpdated = await MatchService.UpdateMatchById(match);
+    if (rowsUpdated > 0) res.status(200).json({ message: 'Updated' });
+
+    throw new CustomAppError('Match id not found', 500);
+  }
 }
 
 export default MatchController;
