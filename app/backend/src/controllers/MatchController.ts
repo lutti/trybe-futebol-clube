@@ -1,4 +1,6 @@
 import { Request, Response } from 'express';
+import CustomAppError from '../errors/CustomAppError';
+import Match from '../database/models/Match';
 import MatchService from '../services/MatchService';
 // import LoginService from '../services/LoginService';
 // import TeamService from '../services/TeamService';
@@ -7,8 +9,17 @@ import MatchService from '../services/MatchService';
 
 class MatchController {
   static async GetAllMatches(req: Request, res: Response): Promise<void> {
-    const matches = await MatchService.GetAllMatches();
-    // res.status(200).json({ message: 'Teste OK' });
+    const { inProgress } = req.query;
+    let matches: Match[];
+    if (!inProgress) {
+      matches = await MatchService.GetAllMatches();
+    } else if (inProgress === 'true') {
+      matches = await MatchService.GetAllMatchesInProgress(true);
+    } else if (inProgress === 'false') {
+      matches = await MatchService.GetAllMatchesInProgress(false);
+    } else {
+      throw new CustomAppError('Query string invalida', 500);
+    }
     res.status(200).json(matches);
   }
 }
