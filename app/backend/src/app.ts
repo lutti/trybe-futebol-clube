@@ -3,6 +3,7 @@ import * as express from 'express';
 import TeamRouter from './routers/TeamRouter';
 import LoginRouter from './routers/LoginRouter';
 import MatchRouter from './routers/MatchRouter';
+import LeaderboardRouter from './routers/LeaderboardRouter';
 import ErrorMidleware from './middlewares/ErrorMidleware';
 
 class App {
@@ -16,6 +17,7 @@ class App {
     this.app.use('/matches', MatchRouter);
     this.app.use('/teams', TeamRouter);
     this.app.use('/login', LoginRouter);
+    this.app.use('/leaderboard', LeaderboardRouter);
     this.app.use(ErrorMidleware);
     // this.app.get('/teams', (req, res) => res.json({ funcionando: 'ta' }));
     // Não remover essa rota
